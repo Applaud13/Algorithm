@@ -1,0 +1,14 @@
+function solution(s) {
+    var answer = 0;
+    let plus = 1;
+    let l = s.length;
+    for(let i=0; i<l; i++){
+        if(s[i]==='-'){
+            plus = -1;
+        }
+        else if(s[i]!=='+'){
+            answer += s[i]*(10**(l-i-1))
+        }
+    }
+    return answer*plus;
+}
