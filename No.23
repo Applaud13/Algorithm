@@ -1,0 +1,16 @@
+function solution(num) {
+    let k = 0;
+    while(k<500){
+        if(num===1){
+        return k;
+        }
+        if(num%2===0){
+            num /= 2;
+        }
+        else{
+            num = num*3 + 1;
+        }
+        k++;
+    }
+    return -1;
+}
