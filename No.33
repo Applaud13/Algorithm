@@ -1,0 +1,11 @@
+function solution(left, right) {
+    var answer = (left + right)*(right - left + 1)/2;
+    for(let i=left; i<right+1; i++){
+        for(let x=1; x*x<i+1; x++){
+            if(i === x*x){
+                answer -= i*2;
+            }
+        }
+    }
+    return answer;
+}
