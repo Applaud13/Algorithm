@@ -1,0 +1,4 @@
+function solution(price, money, count) {
+    var answer = Math.max(count * (count+1) * price/2 - money, 0);
+    return answer;
+}
