@@ -1,8 +1,9 @@
 function solution(n, m) {
     let x = 1;
-    for(let i=2; i<n+1; i++){
-        if(n%i === 0 && m%i === 0){
-            x = i;
+    for(let i=1; i<=n; i++){
+        if(n%i === 0 && m%(n/i) === 0){
+            x = (n/i);
+            break;
         }
     }
     return [x, n * m / x];
