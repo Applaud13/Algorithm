@@ -1,0 +1,12 @@
+function solution(n) {
+    var answer = 0;
+    let Third = [];
+    while(n){
+        Third.push(n%3);
+        n = Math.floor(n/3);
+    }
+    for(let i=0; i<Third.length; i++){
+        answer += Third[i] * 3**(Third.length-i-1);
+    }
+    return answer;
+}
