@@ -1,0 +1,23 @@
+function solution(s, n) {
+    var answer = '';
+    for(let i=0; i<s.length; i++){
+        let stringN = s[i].charCodeAt(0)+n;
+        if(s[i]===` `) {
+            answer += ` `;
+        }
+        else if(s[i]<=`Z`){
+            if(stringN <= 'Z'.charCodeAt(0)) {
+                answer += String.fromCharCode(stringN)               
+            } else {
+                answer += String.fromCharCode(stringN-26)                 
+            }
+        } else {
+            if(stringN <= 'z'.charCodeAt(0)) {
+                answer += String.fromCharCode(stringN)              
+            } else {
+                answer += String.fromCharCode(stringN-26)                 
+            }          
+        }
+    }
+    return answer;
+}
