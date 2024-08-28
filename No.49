@@ -1,0 +1,18 @@
+function solution(numbers) {
+    var answer = [];
+    let k = 0;
+    for(let i=0; i<numbers.length-1; i++){
+        for(let x=i+1; x<numbers.length; x++){
+            let inside = true;
+            for(let y=0; y<answer.length; y++){
+                if(numbers[i]+numbers[x]===answer[y]){
+                    inside = false;
+                    break
+                }
+            }
+            inside ? (answer[k] = numbers[i]+numbers[x], k++) : null;
+        }
+    }
+    answer.sort((a,b) => a - b)
+    return answer;
+}
