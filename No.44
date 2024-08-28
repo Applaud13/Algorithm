@@ -1,0 +1,14 @@
+function solution(sizes) {
+    let long =0;
+    let short = 0;
+    for(let i=0; i<sizes.length; i++){
+        if(sizes[i][0]>sizes[i][1]){
+            long = Math.max(long, sizes[i][0])    
+            short = Math.max(short, sizes[i][1])
+        } else {
+            long = Math.max(long, sizes[i][1])    
+            short = Math.max(short, sizes[i][0])         
+        }
+    }
+    return long*short;
+}
