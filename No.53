@@ -1,0 +1,16 @@
+function solution(k, score) {
+    var answer = [];
+    let Temp = [];
+    k = Math.min(k, score.length)
+    for(let i=0; i<k; i++){
+        Temp[Temp.length] = score[i]
+        Temp.sort((a,b) => b - a)
+        answer[answer.length] = Temp[Temp.length-1]
+    }
+    for(let i=k; i<score.length; i++){
+        Temp[Temp.length] = score[i]
+        Temp.sort((a,b) => b - a)
+        answer[answer.length] = Temp[k-1]
+    }
+    return answer;
+}
