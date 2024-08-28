@@ -1,0 +1,17 @@
+function solution(t, p) {
+    var answer = 0;
+    for (let i=0; i < t.length - p.length + 1; i++) {
+        for(let x=0; x < p.length; x++){
+            if(t[i+x]<p[x]){
+                answer++
+                break;
+            } else if(t[i+x]>p[x]){
+                break;
+            }
+            if(x===p.length-1){
+                answer += t[i+x]===p[x];
+            }
+        }
+    }
+    return answer;
+}
