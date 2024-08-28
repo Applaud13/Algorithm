@@ -1,0 +1,10 @@
+function solution(array, commands) {
+    var answer = [];
+    let now = [];
+    for(let i=0; i<commands.length; i++){
+        now = array.slice(commands[i][0]-1,commands[i][1])
+        now.sort((a,b)=> a - b);
+        answer[i] = now[commands[i][2]-1]
+    }
+    return answer;
+}
