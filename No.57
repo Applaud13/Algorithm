@@ -1,0 +1,17 @@
+function solution(answers) {
+    var answer = [];
+    let First = [1,2,3,4,5,0]
+    let Second = [2,1,2,3,2,4,2,5,0]
+    let Third = [3,3,1,1,2,2,4,4,5,5,0]
+    for(let i=0; i<answers.length; i++){
+        First[i%5]===answers[i] ? First[5]++ : null;
+        Second[i%8]===answers[i] ? Second[8]++ : null;
+        Third[i%10]===answers[i] ? Third[10]++ : null;     
+    }
+    let number = Math.max(First[5], Second[8],Third[10])
+    First[5]===number ? answer[answer.length]=1 : null;
+    Second[8]===number ? answer[answer.length]=2 : null;
+    Third[10]===number ? answer[answer.length]=3 : null;
+    
+    return answer;
+}
