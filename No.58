@@ -1,0 +1,18 @@
+function solution(nums) {
+    var answer = 0;
+    for(let i=0; i<nums.length-2; i++){
+        for(let x=i+1; x<nums.length-1; x++){
+            for(let y=x+1; y<nums.length; y++){
+                let number = nums[i] + nums[x] + nums[y]
+                answer++
+                for(let k=2; k*k<=number; k++){
+                    if (number % k === 0) {
+                    answer--;
+                    break;
+                    }
+                }
+            }
+        }
+    }
+    return answer;
+}
