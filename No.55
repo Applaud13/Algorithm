@@ -1,0 +1,18 @@
+function solution(cards1, cards2, goal) {
+    var answer = '';
+    let C1 = 0;
+    let C2 = 0;
+    let G = 0;
+    while(goal.length - G){
+        if(cards1[C1]===goal[G]){
+            C1++;
+            G++;
+        } else if(cards2[C2]===goal[G]){
+            C2++;
+            G++;
+        } else{
+            return `No`
+        }
+    }
+    return `Yes`;
+}
