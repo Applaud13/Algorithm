@@ -1,0 +1,12 @@
+function solution(a, b) {
+    var answer = '';
+    const month = [0,31,29,31,30,31,30,31,31,30,31,30,31]
+    const dow = [`THU`,`FRI`,`SAT`,`SUN`,`MON`,`TUE`,`WED`]
+    let date = b;
+    while(a){
+        a--
+        date += month[a];
+    }
+    date = date%7;
+    return dow[date];
+}
