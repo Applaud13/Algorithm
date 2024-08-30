@@ -1,0 +1,19 @@
+function solution(n, m, section) {
+    var answer = 0;
+    let k = 0;
+    let i = 1;
+    while(true){ 
+        if(i===section[k]){
+            answer++
+            i += m-1
+            while(i>=section[k]){
+                if(k===section.length-1){
+                    return answer
+                }
+            k++;
+            }
+        }
+        i++
+    }
+    return answer;
+}
