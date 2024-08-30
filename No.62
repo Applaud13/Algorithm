@@ -1,0 +1,19 @@
+function solution(babbling) {
+    var answer = 0;
+    let Speak = ["aya", "ye", "woo", "ma"]
+    for(let i=0; i<babbling.length; i++){
+        for(let x=0; x<4; x++){
+            babbling[i] = babbling[i].split(Speak[x]).join(x);
+        }
+        if(isNaN(babbling[i])===false){
+            answer++
+            for(let y=0; y<babbling[i].length-1; y++){
+                if(babbling[i][y]===babbling[i][y+1]){
+                    answer--
+                    break
+                }
+            }
+        }
+    }
+    return answer;
+}
