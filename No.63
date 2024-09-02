@@ -1,0 +1,21 @@
+function solution(X, Y) {
+    var answer = '';
+    let NX = [0,0,0,0,0,0,0,0,0,0]
+    let NY = [0,0,0,0,0,0,0,0,0,0]
+    for(let i=0; i<X.length; i++){
+        NX[X[i]]++;
+    }
+    for(let i=0; i<Y.length; i++){
+        NY[Y[i]]++;
+    }
+    for(let i=0; i<10; i++){
+        let n = Math.min(NX[9-i],NY[9-i])
+        answer += (9-i).toString().repeat(n)
+    }
+    if(answer.length===0){
+        return '-1'
+    } else if(answer[0]==='0'){
+        return '0'
+    }
+    return answer;
+}
