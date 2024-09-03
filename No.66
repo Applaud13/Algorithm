@@ -1,0 +1,24 @@
+function solution(keymap, targets) {
+    var answer = [];
+    for(let i=0; i<targets.length; i++){
+        answer[i] = 0;
+        for(let x=0; x<targets[i].length; x++){
+            let L = 404;
+            for(let y=0; y<keymap.length; y++){
+                for(let z=0; z<keymap[y].length; z++){
+                    if(targets[i][x]===keymap[y][z]){
+                        L = Math.min(L, z+1);
+                        break;
+                    }
+                }
+            }
+            if(L===404){
+                answer[i] = -1;
+                break;                
+            }else{
+                answer[i] += L;
+            }
+        }
+    }
+    return answer;
+}
