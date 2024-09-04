@@ -1,0 +1,17 @@
+function solution(wallpaper) {
+    let RLmin = 50;
+    let UDmin = 50;
+    let RLmax = 0;
+    let UDmax = 0;
+    for(let x=0; x<wallpaper.length; x++){
+        for(let y=0; y<wallpaper[0].length; y++){
+            if(wallpaper[x][y]===`#`){
+                RLmin = Math.min(RLmin, x)
+                UDmin = Math.min(UDmin, y)
+                RLmax = Math.max(RLmax, x+1)
+                UDmax = Math.max(UDmax, y+1)               
+            }
+        }
+    }
+    return [RLmin, UDmin, RLmax, UDmax];
+}
