@@ -1,0 +1,18 @@
+function solution(survey, choices) {
+    var answer = '';
+    let S = [`R`, `T`, `C`, `F`, `J`, `M`, `A`, `N`]
+    let A = [0, 0, 0, 0]
+    for(let i=0; i<survey.length; i++){
+        for(let x=0; x<8; x++){
+            if(survey[i][0]===S[x]){
+                x%2===0 ? A[Math.floor(x/2)] += 4 - choices[i] : A[Math.floor(x/2)] += choices[i] - 4
+            }
+        }
+    }
+    
+    for(let i=0; i<4; i++){
+        A[i]<0 ? answer+=S[2*i+1] : answer+=S[2*i];
+    }
+    
+    return answer;
+}
