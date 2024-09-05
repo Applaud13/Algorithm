@@ -1,0 +1,18 @@
+function solution(players, callings) {
+    
+    const playersRank = new Map();
+    players.forEach((name, rank) => playersRank.set(name, rank));
+    
+    for(let i=0; i<callings.length; i++){
+        let Rank = playersRank.get(callings[i]) //3
+        let catched = players[Rank-1] //poe
+        
+        players[Rank-1] = players[Rank] //poe -> kai
+        players[Rank] = catched // kai -> poe
+          
+        playersRank.set(callings[i], Rank-1) // kai:3 -> kai:2
+        playersRank.set(catched, Rank) // poe:2 -> poe:3
+    }
+
+    return players;
+}
