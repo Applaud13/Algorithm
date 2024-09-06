@@ -1,0 +1,53 @@
+function solution(park, routes) {
+    var start = [];
+    for(let x=0; x<park.length; x++){
+        for(let y=0; y<park[0].length; y++){
+            park[x][y] === `S` ? start = [x, y] : null;
+        }
+    }
+
+    for(let i=0; i<routes.length; i++){
+        if(routes[i][0]===`E`){
+            let possible = true;
+            for(let x=0; x<Number(routes[i][2]); x++){
+                if(start[1] + 1 + x === park[0].length || park[start[0]][start[1] + 1 + x] === `X`){
+                    possible = false;
+                    break;
+                }
+            }
+            possible ? start[1] += Number(routes[i][2]) : null
+            
+        } else if(routes[i][0]===`W`){
+            let possible = true;
+            for(let x=0; x<Number(routes[i][2]); x++){
+                if(start[1] - x === 0 || park[start[0]][start[1] - 1 - x] === `X`){
+                    possible = false;
+                    break;
+                }
+            }
+            possible ? start[1] -= Number(routes[i][2]) : null
+            
+        } else if(routes[i][0]===`S`){
+            let possible = true;
+            for(let x=0; x<Number(routes[i][2]); x++){
+                if(start[0] + 1 + x === park.length || park[start[0] + 1 + x][start[1]] === `X`){
+                    possible = false;
+                    break;
+                }
+            }
+            possible ? start[0] += Number(routes[i][2]) : null
+            
+        } else if(routes[i][0]===`N`){
+            let possible = true;
+            for(let x=0; x<Number(routes[i][2]); x++){
+                if(start[0] - x === 0 || park[start[0] - 1 - x][start[1]] === `X`){
+                    possible = false;
+                    break;
+                }
+            }
+            possible ? start[0] -= Number(routes[i][2]) : null
+        }
+    }
+    
+    return start;
+}
