@@ -1,0 +1,45 @@
+function solution(id_list, report, k) {
+    var answer = [];
+    
+    const reporttime = new Map()  // 이름 : 신고당한 횟수
+    for(let i=0; i<id_list.length; i++){
+        reporttime.set(id_list[i], 0)
+    }
+    // 신고당한 횟수 기록하기
+    report.sort();
+    for(let i=0; i<report.length; i++){
+        report[i] = report[i].split(" "); // [신고자, 피신고자]
+    }
+    for(let i=0; i<report.length; i++){ 
+        let x = report[i][1];  // 신고당한 사람
+        if(i<report.length-1){
+            if(report[i][0]!==report[i+1][0] || report[i][1]!==report[i+1][1]){
+                reporttime.set(x, reporttime.get(x) + 1);
+            }
+        } else{
+            reporttime.set(x, reporttime.get(x) + 1);
+        }
+    }
+    
+    
+    const mailtime = new Map()  // 이름 : 메일받은 횟수
+    for(let i=0; i<id_list.length; i++){
+        mailtime.set(id_list[i], 0)
+    }
+    //  메일받은 횟수 기록하기 
+    for(let i=0; i<report.length; i++){ 
+        let x = report[i][0];  // 신고한 사람
+        if(reporttime.get(report[i][1]) >= k){  // 신고당한 사람이 정지일 경우
+            if(i<report.length-1){
+                if(report[i][0]!==report[i+1][0] || report[i][1]!==report[i+1][1]){
+                    mailtime.set(x, mailtime.get(x) + 1)
+                }
+            } else{
+                mailtime.set(x, mailtime.get(x) + 1)
+            }
+        }     
+    }
+    const mail = mailtime.values();
+    answer = Array.from(mail);
+    return answer;
+}
