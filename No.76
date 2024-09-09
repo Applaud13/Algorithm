@@ -1,0 +1,17 @@
+function solution(s) {
+    var answer = '';
+    let First = true;
+    
+    for(let i=0; i<s.length; i++){
+        if(First && s[i].charCodeAt()>96 && s[i].charCodeAt()<123){
+            answer += s[i].toUpperCase();
+        } else if(!First && s[i].charCodeAt()>64 && s[i].charCodeAt()<91){
+            answer += s[i].toLowerCase();
+        } else {
+            answer += s[i];
+        }
+        
+        s[i] === ` ` ? First = true : First = false;      
+    }
+    return answer;
+}
