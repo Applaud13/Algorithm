@@ -1,0 +1,16 @@
+function solution(s) {
+    var answer = [0, 0];
+    while(s.length - 1){
+        let one = 0;
+        for(let i=0; i<s.length; i++){
+            s[i] === "0" ? answer[1]++ : one++;
+        }
+        answer[0] ++;
+        s = "";
+        while(one){
+            one%2 === 0 ? s = "0" + s : s = "1" + s
+            one = Math.floor(one/2);
+        }
+    }
+    return answer;
+}
