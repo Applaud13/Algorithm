@@ -1,0 +1,8 @@
+function solution(n) {
+    let number = [0, 1];
+    while(n > number.length-1){
+        number[number.length] = number[number.length-1] + number[number.length-2];
+        number[number.length-1] = number[number.length-1] % 1234567;
+    }
+    return number[n];
+}
