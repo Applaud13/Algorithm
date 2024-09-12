@@ -1,0 +1,9 @@
+function solution(brown, yellow) {
+    let possible = [];
+    let S = brown + yellow;
+    for(let i=3; i*i<=S; i++){
+        if(S % i=== 0 && (S/i-2) * (i-2) === yellow){  
+            return [S/i, i]
+        }
+    }
+}
