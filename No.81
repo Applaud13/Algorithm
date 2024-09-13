@@ -1,0 +1,30 @@
+function solution(arr) {
+    var answer = 1;
+    let m = [];
+    arr.sort((a , b) => b - a);
+    for(let i=2; i<101; i++){
+        let Prime = true;
+        for(let x=2; x*x<=i; x++){
+            if(i%x===0){
+                Prime = false;
+                break;
+            }
+        }
+        Prime ? m.push(i) : null;
+    }
+    
+    let common = [];
+    let k = 0;
+    while(m.length - k){
+        let have = false;
+        for(let i=0; i<arr.length; i++){
+            arr[i] % m[k] === 0 ? (arr[i] /= m[k], have=true) : null;
+        }
+        have ? common.push(m[k]) : k++;
+    }
+    
+    for(let i=0; i<common.length; i++){
+        answer *= common[i];
+    }
+    return answer;
+}
