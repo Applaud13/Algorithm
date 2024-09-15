@@ -1,0 +1,16 @@
+function solution(k, tangerine) {
+    var answer = 0;
+    let number = [];
+    tangerine.sort()
+    let n = 1;
+    for(let i=1; i<tangerine.length; i++){
+        tangerine[i] === tangerine[i-1] ? n++ : (number.push(n), n=1);
+    }
+    number.push(n);
+    number.sort((a, b) => b - a);
+    while(k > 0){
+        k -= number[answer];
+        answer++
+    }
+    return answer;
+}
