@@ -1,0 +1,15 @@
+function solution(s) {
+    var answer = 0;
+    for(let i=0; i<s.length; i++){
+        let revolve = s.slice(i) + s.slice(0,i)
+        let original = "";
+        while(original !== revolve){
+            original = revolve;
+            revolve = revolve.split("()").join("");
+            revolve = revolve.split("[]").join("");
+            revolve = revolve.split("{}").join("");
+        }
+        revolve.length === 0 ? answer++ : null;
+    }
+    return answer;
+}
