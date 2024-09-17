@@ -1,0 +1,16 @@
+function solution(elements) {
+    let casesN = [];  
+    // 연속 몇개
+    for(let i=1; i<elements.length; i++){
+        // 어디부터
+        for(let x=0; x<elements.length; x++){
+            let k = 0;
+            for(let y=x; y<i+x; y++){
+                k += elements[y%elements.length];
+            }
+             casesN.push(k);
+        }
+    }
+    const cases = [...new Set(casesN)]
+    return cases.length + 1;
+}
