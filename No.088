@@ -1,0 +1,16 @@
+function solution(arr1, arr2) {
+    var answer = [];
+    for(let x=0; x<arr1.length; x++){
+        let temp = [];
+        for(let y=0; y<arr2[0].length; y++){
+            let k = 0;
+            for(let i=0; i<arr1[0].length; i++){
+                k += arr1[x][i] * arr2[i][y]
+            }
+            temp.push(k)
+        }
+        answer.push(temp)
+    }
+    
+    return answer;
+}
