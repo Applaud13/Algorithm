@@ -1,0 +1,31 @@
+function solution(want, number, discount) {
+    var answer = 0;
+    let Number = [];
+    for(let i=0; i<number.length; i++){
+        Number.push(0);
+    }
+
+    for(let i=0; i<10; i++){
+        for(let x=0; x<number.length; x++){
+            if(discount[i]===want[x]){
+                Number[x]++
+                break;
+            }
+        }
+    }
+    JSON.stringify(Number) === JSON.stringify(number)  ? answer++ : null;
+    
+    for(let i=0; i<discount.length-10; i++){
+        for(let x=0; x<number.length; x++){
+            if(discount[i]===want[x]){
+                Number[x]--
+            }
+            if(discount[i+10]===want[x]){
+                Number[x]++
+            }
+        }
+        JSON.stringify(Number) === JSON.stringify(number) ? answer++ : null;
+    }
+    
+    return answer;
+}
