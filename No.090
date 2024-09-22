@@ -1,0 +1,30 @@
+function solution(clothes) {
+    var answer = 1;
+    let number = [];
+    // 옷 종류별로 개수 카운팅
+    for(let i=0; i<clothes.length; i++){
+        clothes[i][0] = 1;
+        for(let x=0; x<i; x++){
+            if(clothes[i][1] === clothes[x][1]){
+                clothes[i][0]--;
+                clothes[x][0]++;
+                break;
+            }
+        }
+    }
+    
+    // 개수만 배열로 정리
+    for(let i=0; i<clothes.length; i++){
+        clothes[i][0] ? number.push(clothes[i][0]) : null;
+    }
+    
+    // 모든 경우의 수 계산
+    for(let i=0; i<number.length; i++){
+        answer *= number[i] + 1;
+    }
+    
+    // 아무것도 안입는 경우
+    answer--;
+    
+    return answer;
+}
