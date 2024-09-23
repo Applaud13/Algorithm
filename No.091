@@ -1,0 +1,18 @@
+function solution(progresses, speeds) {
+    var answer = [];
+    let work = 1;
+    let maxday = Math.ceil((100 - progresses[0]) / speeds[0]);
+    for(let i=1; i<progresses.length; i++){
+        const day = Math.ceil((100 - progresses[i]) / speeds[i])
+        if(day > maxday){
+            answer.push(work);
+            work = 1;
+            maxday = day;
+        } else {
+            work++;
+        }
+    }
+    answer.push(work);
+    
+    return answer;
+}
