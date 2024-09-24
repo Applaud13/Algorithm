@@ -1,0 +1,16 @@
+function solution(priorities, location) {
+    var answer = 0;
+    let x = 0;
+    while(true){
+        let maxp = Math.max(...priorities);
+        if(priorities[x] === maxp){
+            answer++;
+            priorities[x] = 0;
+            if(x === location){
+                return answer;
+            }
+        }
+        x++;
+        x = x%priorities.length;
+    }
+}
