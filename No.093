@@ -1,0 +1,9 @@
+function solution(k, dungeons) {
+    var answer = 0;
+    for(let i=0; i<dungeons.length; i++){
+        if(k >= dungeons[i][0]){
+            answer = Math.max(solution(k - dungeons[i][1], dungeons.slice(0, i).concat(dungeons.slice(i + 1))) + 1, answer);
+        }
+    }
+    return answer;
+}
