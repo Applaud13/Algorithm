@@ -1,0 +1,23 @@
+function solution(n, k) {
+    var answer = 0;
+    let number = "";
+    while(n){
+        number = n % k + number;
+        n = Math.floor(n / k);
+    }
+    number = number.split(0);
+    
+    for(let i=0; i<number.length; i++){
+        let prime = false;
+        number[i] > 1 ? prime =true : null;
+        for(let x=2; x*x <= number[i]; x++){
+            if(number[i] % x === 0){
+                prime = false;
+                break;
+            }
+        }
+        prime ? answer++ : null;
+    }
+    
+    return answer;
+}
