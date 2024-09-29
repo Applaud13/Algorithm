@@ -1,0 +1,27 @@
+function addWord(words, AEIOU, word){
+    if(word.length > 4) return;
+    for(let i=0; i<5; i++){
+        let tempWord = word + AEIOU[i];
+        words.push(tempWord);
+        addWord(words, AEIOU, tempWord);
+    }
+}
+
+function solution(word) {
+    var answer = 0;
+    let words = [];
+    const AEIOU = ["A","E","I","O","U"]
+    for(let i=0; i<5; i++){
+        let tempWord = "";
+        tempWord += AEIOU[i];
+        words.push(tempWord);
+        addWord(words, AEIOU, tempWord);
+    }
+    words.sort()
+    
+    for(let i=0; words.length; i++){
+        if(word === words[i]){
+            return (i+1);
+        }
+    }
+}
