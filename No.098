@@ -1,0 +1,22 @@
+// 내 뒤에 있지만 나보다 작은 수는 아무 의미 없다
+function solution(numbers) {
+    let stack = [];
+    for(let i=0; i<numbers.length; i++){
+        let exist = false;
+        for(let x=0; x<stack.length; x++){
+            if(numbers[numbers.length - 1 - i] < stack[x]){ 
+                stack = stack.slice(x);
+                stack.unshift(numbers[numbers.length - 1 - i]);
+                numbers[numbers.length - 1 - i] = stack[1];            
+                exist = true;
+                break;
+            }
+        }
+        if(!exist){
+            stack = [numbers[numbers.length - 1 - i]];
+            numbers[numbers.length - 1 - i] = -1;
+        }    
+    }
+    
+    return numbers;
+}
