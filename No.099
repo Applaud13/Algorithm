@@ -1,0 +1,43 @@
+const addtopping = (basic, add) => {
+    for(let i=0; i<add.length; i++){
+        let find = basic.get(add[i])
+        if(find){
+            basic.set(add[i], find + 1);
+        } else{
+            basic.set(add[i], 1);
+        }
+    }
+    return basic;
+}
+
+const subtopping = (basic, sub) => {
+    for(let i=0; i<sub.length; i++){
+        let find = basic.get(sub[i])
+        basic.set(sub[i], find - 1)
+        if(find === 1){
+            basic.delete(sub[i]);
+        }
+    }
+    return basic;
+}
+
+function solution(topping) {
+    var answer = 0;
+    let A = new Map();
+    let B = new Map();
+    B = addtopping(B, topping);    
+    let k = 0
+    while(true){
+        let gap = B.size - A.size;
+        if(gap < 0){
+            return answer;
+        } else if(gap === 0){
+            answer++;
+            gap++;
+        }
+        gap = Math.ceil(gap / 2)
+        A = addtopping(A, topping.slice(k, k + gap))
+        B = subtopping(B, topping.slice(k, k + gap))
+        k += gap;
+    }
+}
