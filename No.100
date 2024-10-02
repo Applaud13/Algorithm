@@ -1,0 +1,38 @@
+function solution(x, y, n) {
+    var answer = 0;
+    let now = [y]
+    if(x === y){
+        return answer;
+    }
+    while(true){
+        let next = [];
+        answer++;
+        for(let i=0; i<now.length; i++){
+            if(now[i] % 3 === 0){
+                if(now[i] / 3 === x){
+                    return answer;
+                }
+                next.push(now[i] / 3);
+            }
+            
+            if(now[i] % 2 === 0){
+                if(now[i] / 2 === x){
+                    return answer;
+                }
+                next.push(now[i] / 2);
+            }
+            
+            if(now[i] - n > 0){
+                if(now[i] - n === x){
+                    return answer;
+                }
+                next.push(now[i] - n);
+            }
+        }
+        if(!next.length){
+            return -1;
+        }
+        next = [...new Set(next)];
+        now = next;
+    }
+}
