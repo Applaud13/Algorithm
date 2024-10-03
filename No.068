@@ -1,0 +1,19 @@
+function solution(ingredient) {
+    let ready = [];
+    
+    for(let i=0; i<ingredient.length; i++){
+        ready.push(ingredient[i]);
+        let long = ready.length;
+        if(long >= 4 &&
+           ready[long-1] === 1 &&
+           ready[long-2] === 3 &&
+           ready[long-3] === 2 &&
+           ready[long-4] === 1){
+            for(let x = 0; x < 4; x++){
+            ready.pop();
+            }
+        }
+    }
+    
+    return (ingredient.length - ready.length) / 4;
+}
