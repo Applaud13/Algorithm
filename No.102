@@ -1,0 +1,19 @@
+function solution(bridge_length, weight, truck_weights) {
+    var answer = 0;
+    let going = Array(bridge_length).fill(0);
+    let standard = 0;
+    let order = 0;
+    let sumWeight = 0;
+    while(truck_weights.length - order){
+        sumWeight -= going[standard];
+        going[standard] = 0;
+        if(sumWeight + truck_weights[order] <= weight){
+            going[standard] = truck_weights[order];
+            sumWeight += truck_weights[order];
+            order++;
+        }
+        standard = (++answer % bridge_length);
+    }
+    
+    return answer + bridge_length;
+}
