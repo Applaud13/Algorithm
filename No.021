@@ -1,0 +1,9 @@
+function solution(x) {
+    let k = 0;
+    let a = x;
+    while(x){
+        k += x % 10;
+        x = Math.floor(x / 10);
+    }
+    return !(a % k);
+}
