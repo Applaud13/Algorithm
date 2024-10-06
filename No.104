@@ -1,0 +1,32 @@
+const calculate = (prevNumbers, restNumbers, resultNumbers) => {
+    if(restNumbers.length < 2){
+        return resultNumbers.add(Number(prevNumbers + restNumbers))
+    }
+    
+    for(let i = 0; i<restNumbers.length; i++){
+        let temp = prevNumbers + restNumbers[i];
+        let temp2 = restNumbers.slice(0, i) + restNumbers.slice(i+1);
+        resultNumbers.add(Number(temp));
+        resultNumbers = calculate(temp, temp2, resultNumbers);
+    }
+    
+    return resultNumbers
+}
+
+function solution(numbers) {
+    var answer = 0;
+    let results = new Set();
+    results = calculate("", numbers, results)
+    for(let number of results){
+        number === 0 || number === 1 ? answer-- : null;
+        for(let i=2; i*i <= number; i++){
+            if(number % i === 0){
+                answer--;
+                break;
+            }
+        }
+        answer++;
+    }
+    return answer;
+}
+    
