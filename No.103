@@ -1,0 +1,32 @@
+function compare(num1, num2){
+    num1 = String(num1);
+    num2 = String(num2);
+    let x = num1.length;
+    let y = num2.length;
+    
+    for(let i=0; i < x * y; i++){
+        if(num1[i % x] > num2[i % y]){
+            return -1
+        } else if(num1[i % x] < num2[i % y]){
+            return 1
+        }
+    }
+
+    return 1
+}
+
+function solution(numbers) {
+    var answer = '';
+    
+    numbers.sort((a, b) => compare(a, b))
+    
+    for(let i=0; i<numbers.length; i++){
+        answer += numbers[i]
+    }
+    
+    if(Number(answer) === 0){
+        return "0"
+    }
+    
+    return answer;
+}
