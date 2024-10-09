@@ -1,0 +1,22 @@
+function solution(order) {
+    var answer = 0;
+    let conveyor = [];
+    for(let i=0; i<order.length; i++){
+        if(order[answer] === i+1){
+            answer++;
+            i+1 === order.length ? i-- : null;
+        }else if(order[answer] === conveyor[conveyor.length - 1]){
+            answer++;
+            conveyor.pop();
+            i--;
+        }else{
+            conveyor.push(i+1);
+        }
+        
+        if(answer === order.length){
+            break;
+        }
+
+    }
+    return answer;
+}
