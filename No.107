@@ -1,0 +1,52 @@
+function solution(number, k) {
+    var answer = '';
+    // number를 배열로 변환
+    let numbers = [];
+    for(let i=0; i<number.length; i++){
+        numbers[i] = Number(number[i]);
+    }
+    let i = 1;
+    let x = 0;
+    
+    // k개 제거할때까지 반복
+    while(k){
+        x++;
+        // 앞에서부터 삭제 될 숫자(배열)에 -1 삽입하여 표시
+        if(numbers[i-x] + 1){
+            if(numbers[i-x] < numbers[i]){
+                numbers[i-x] = -1;
+                k--;
+            }else{
+                i++;
+                x = 0;
+            }
+        }
+        
+        // 맨앞숫자까지 다 지워진 경우 다시 뒤로
+        if(i - x - 1 < 0){
+            i++
+            x = 0;
+        }
+        
+        // 마지막 숫자까지 다 비교끝난 경우 맨 뒤부터 순서대로 삭제
+        if(i === numbers.length){
+            for(let y=0; y<k; y++){
+                if(numbers[numbers.length - y - 1]){
+                    numbers[numbers.length - y - 1] = -1;
+                }else{
+                    y--;
+                }
+            }
+            break
+        }
+    }
+    
+    // -1로 표시하여 삭제될 숫자 실제로 삭제
+    for(let i=0; i<numbers.length; i++){
+        if(numbers[i] >= 0){
+            answer += numbers[i]
+        }
+    }
+    
+    return answer;
+}
