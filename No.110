@@ -1,0 +1,35 @@
+
+const sum = (array) => {
+    let sum = 0;
+    for(let i=0; i<array.length; i++){
+        sum += array[i];
+    }
+    return sum
+}
+
+function solution(queue1, queue2) {
+    var answer = 0;
+    let sum1 = sum(queue1)
+    let sum2 = sum(queue2)
+    let Sum = (sum1 + sum2) / 2
+    let start1 = 0;
+    let start2 = 0;
+    let limit = queue1.length + queue2.length + 2
+    while(sum1 !== Sum){
+        if(sum1 > Sum){
+            queue2.push(queue1[start1]);
+            sum1 -= queue1[start1];
+            start1++;
+        }else{
+            queue1.push(queue2[start2]);
+            sum1 += queue2[start2];
+            start2++;
+        }
+        answer++;
+        if(answer > limit){
+            return -1
+        }
+    }
+    
+    return answer;
+}
