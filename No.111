@@ -1,0 +1,108 @@
+const moveIsland = (newMaps, x, y, food) => {
+    const returnValue = [];
+    // 동서남북 순으로 연결된 땅 조회
+    // 동
+    if(y + 1 < newMaps[0].length){
+        if(newMaps[x][y + 1] !== "X"){
+            returnValue.push([x, y + 1]);
+            food += newMaps[x][y + 1];
+            newMaps[x][y + 1] = "X";
+        }
+    }
+
+    // 서
+    if(y - 1 >= 0){
+        if(newMaps[x][y - 1] !== "X"){
+            returnValue.push([x, y - 1]);
+            food += newMaps[x][y - 1];
+            newMaps[x][y - 1] = "X";
+        }
+    }
+    
+    // 남
+    if(x + 1 < newMaps.length){
+        if(newMaps[x + 1][y] !== "X"){
+            returnValue.push([x + 1, y]);
+            food += newMaps[x + 1][y];
+            newMaps[x + 1][y] = "X";
+        }
+    }
+    
+    // 북
+    if(x - 1 >= 0){
+        if(newMaps[x - 1][y] !== "X"){
+            returnValue.push([x - 1, y]);
+            food += newMaps[x - 1][y];
+            newMaps[x - 1][y] = "X";
+        }
+    }
+    returnValue.push(food);
+    
+    return returnValue
+}
+
+
+
+function solution(maps) {
+    var answer = []
+    // 문자열 배열로 변환
+    const newMaps = [];
+    for(let x=0; x<maps.length; x++){
+        const temp = [];
+        for(let y=0; y<maps[0].length; y++){
+            if(maps[x][y] !== "X"){
+                temp.push(Number(maps[x][y])); 
+            }else{
+                temp.push(maps[x][y]);
+            }
+            
+        }
+        newMaps.push(temp);
+    }
+    
+    const startPoint = [];
+    let s = 1
+    while(true){
+        let food = 0;
+        // 다음 시작 지점 = startPoint
+        let stop = false;
+        for(let x=0; x<newMaps.length; x++){
+            for(let y=0; y<newMaps[0].length; y++){
+                if(newMaps[x][y] !== "X"){
+                    startPoint.push([x, y]);
+                    food += newMaps[x][y];
+                    newMaps[x][y] = "X";
+                    stop = true;
+                    break;
+                }
+            }
+            if(stop){
+                break;
+            }
+        }
+        
+        // 더 이상 X 표시 안된곳이 없으면 종료
+        if(startPoint.length < 1){
+            break;
+        }
+        
+        // 자신과 연결된 땅 조회 (먼저 조회된 지점으로이동, 그다음으로 조회된 지점들은 statrPoint 배열로 push)
+        while(startPoint.length){
+            const temp = moveIsland(newMaps, startPoint[0][0], startPoint[0][1], food);
+            startPoint.shift();
+            for(let i = 0; i < temp.length - 1; i++){
+                startPoint.push(temp[i]);
+            }
+            food = temp[temp.length - 1];
+        }
+        answer.push(food)
+    }
+    
+    if(answer.length){
+        answer.sort((a,b) => a - b)
+        return answer
+    }
+    else{
+        return [-1]
+    }
+}
