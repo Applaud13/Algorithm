@@ -1,0 +1,58 @@
+function solution(rows, columns, queries) {
+    var answer = [];
+    
+    // 직사각형 본체를 배열로 표현
+    const square = [];
+    for(let y=0; y<rows; y++){
+        let xLength = []
+        for(let x=0; x<columns; x++){
+            xLength.push(y * columns + x + 1)
+        }
+        square.push(xLength);
+    }
+
+    // 각 쿼리에대해 회전 반복
+    for(let i=0; i<queries.length; i++){
+        
+        // 시작점
+        let wait = square[queries[i][0] - 1][queries[i][1] -1];
+        let next;
+        let lowNumber = wait;
+        
+        // 상단지점 우측으로 회전
+        for(let right = queries[i][1]; right < queries[i][3]; right++){
+            next = wait;
+            wait = square[queries[i][0] - 1][right];
+            square[queries[i][0] - 1][right] = next;
+            lowNumber = Math.min(lowNumber, wait)
+        }
+        
+        // 우측지점 하단으로 회전
+        for(let down = queries[i][0]; down < queries[i][2]; down++){
+            next = wait;
+            wait = square[down][queries[i][3] - 1];
+            square[down][queries[i][3] - 1] = next;
+            lowNumber = Math.min(lowNumber, wait)
+        }
+        
+        // 하단지점 좌측으로 회전
+        for(let left = queries[i][3] - 2; left > queries[i][1] - 2; left--){
+            next = wait;
+            wait = square[queries[i][2] - 1][left];
+            square[queries[i][2] - 1][left] = next;
+            lowNumber = Math.min(lowNumber, wait)
+        }
+        
+        // 좌측지점 상단으로 회전
+        for(let up = queries[i][2] - 2; up > queries[i][0] - 2; up--){
+            next = wait;
+            wait = square[up][queries[i][1] - 1];
+            square[up][queries[i][1] - 1] = next;
+            lowNumber = Math.min(lowNumber, wait)
+        }
+        
+        // 가장 작은 수 삽입
+        answer.push(lowNumber)
+    }
+    return answer;
+}
