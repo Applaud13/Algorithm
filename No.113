@@ -1,0 +1,23 @@
+const childCount = (parent, wires, n, smallGap) => {
+    let count = 1;
+    let gap = smallGap;
+    for(let i=0; i<wires.length; i++){
+        for(let x=0; x<2; x++){
+            if(wires[i][x] === parent){
+                const child = wires[i][(x+1) % 2]
+                wires = wires.slice(0, i).concat(wires.slice(i + 1));
+                i--;
+                const temp = childCount(child, wires, n, smallGap)
+                count += temp[0];
+                gap = Math.min(temp[1], gap)
+                break;
+            }
+        }
+    }
+    gap = Math.min(Math.abs(n - count * 2), gap);
+    return [count, gap]
+}
+
+function solution(n, wires) {
+    return childCount(wires[0][0], wires, n, n)[1];
+}
