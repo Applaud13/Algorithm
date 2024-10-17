@@ -1,0 +1,44 @@
+const move = (start, road, fastTime, useTime, K) => {
+    if(useTime - K >= 0) return fastTime;
+    let newFastTime = fastTime;
+    let next = [];
+    // start마을에서 i마을로 이동
+    for(let i=0; i<road.length; i++){
+        if(start === road[i][0]){
+            if(useTime + road[i][2] < newFastTime[road[i][1]]){
+                newFastTime[road[i][1]] = useTime + road[i][2]; // i마을로 가는 가장 빠른 시간 갱신
+                next.push([road[i][1], newFastTime[road[i][1]]]); // 다음 출발지: i마을 조건 추가
+            }
+            
+        } else if(start === road[i][1]){
+            if(useTime + road[i][2] < newFastTime[road[i][0]]){
+                newFastTime[road[i][0]] = useTime + road[i][2]; // i마을로 가는 가장 빠른 시간 갱신
+                next.push([road[i][0], newFastTime[road[i][0]]]); // 다음 출발지: i마을 조건 추가
+            }
+        }
+    }
+
+    // 출발지, 사용시간 바꿔서 재귀함수 실행
+    for(let i=0; i<next.length; i++){
+        newFastTime = move(next[i][0], road, newFastTime, next[i][1], K)
+    }
+    
+    return newFastTime
+}
+
+function solution(N, road, K) {
+    var answer = 1;
+    let fastTime = {}
+    for(let i=2; i<N + 1; i++){
+        fastTime[i] = K + 1;
+    }
+    // 1번 마을에서 각 마을로 가는 가장 빠른 시간 fastTime으로 저장
+    fastTime = move(1, road, fastTime, 0, K);
+
+    // K시간 안에 도착한 마을 수
+    for(let i=2; i<N + 1; i++){
+        if(fastTime[i] <= K) answer++;
+    }
+    
+    return answer
+}
