@@ -1,0 +1,26 @@
+const timeToNumber = (array) => {
+    const Number = []
+    for(let i=0; i<array.length; i++){
+        const come = array[i][0][0] * 600 + array[i][0][1] * 60 + array[i][0][3] * 10 + array[i][0][4] * 1
+        const out = array[i][1][0] * 600 + array[i][1][1] * 60 + array[i][1][3] * 10 + array[i][1][4] * 1 + 9
+        Number.push([come, out])
+    }
+    return Number
+}
+
+function solution(book_time) {
+    var answer = 0;
+    // 사용시간 숫자로(청소 포함) 변환
+    const bookTime = timeToNumber(book_time);
+    
+    // 0~1439분 까지 사용중인 방의 개수 구하기
+    for(let i=0; i<1440; i++){
+        let guestNow = 0;
+        for(let x=0; x<bookTime.length; x++){
+            bookTime[x][0] <= i && bookTime[x][1] >= i ? guestNow++ : null;
+        }
+        answer = Math.max(answer, guestNow) // 최대개수 갱신
+    }  
+    
+    return answer;
+}
