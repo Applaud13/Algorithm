@@ -1,0 +1,19 @@
+function solution(storey) {
+    var answer = 0;
+    while(storey){
+        while(storey % 10 === 0){
+            storey /=10
+        }
+        if(storey % 10 >= 6){
+            answer++
+            storey++
+        }else if(storey % 10 <= 4){
+            answer++
+            storey--
+        }else{
+            answer++
+            storey % 100 <= 50 ? storey-- : storey++;
+        }
+    }
+    return answer;
+}
