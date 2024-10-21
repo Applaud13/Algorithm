@@ -1,0 +1,50 @@
+const isDistancing = (x, y, nowPlace, moveLeft) => {
+    if(moveLeft === 2 && nowPlace[x][y] !== "P") return false // 시작점 검사
+    if(moveLeft <= 0) return false; // 남은 이동 횟수 검사
+    let isNear = false;
+    let newPlace = nowPlace.slice(0);
+    newPlace[x] = newPlace[x].slice(0,y).concat("X").concat(newPlace[x].slice(y+1))
+    
+    // 동쪽으로 이동
+    if(y<4 && newPlace[x][y+1] !== "X"){
+        if(newPlace[x][y+1] === "P") return true
+        isDistancing(x, y+1, newPlace, moveLeft-1) ? isNear=true : null;
+    }
+    
+    // 서쪽으로 이동
+    if(y>0 && newPlace[x][y-1] !== "X"){
+        if(newPlace[x][y-1] === "P") return true
+        isDistancing(x, y-1, newPlace, moveLeft-1) ? isNear=true : null;
+    }
+    
+    // 남쪽으로 이동
+    if(x<4 && newPlace[x+1][y] !== "X"){
+        if(newPlace[x+1][y] === "P") return true
+        isDistancing(x+1, y, newPlace, moveLeft-1) ? isNear=true : null;
+    }
+    
+    // 북쪽으로 이동
+    if(x>0 && newPlace[x-1][y] !== "X"){
+        if(newPlace[x-1][y] === "P") return true
+        isDistancing(x-1, y, newPlace, moveLeft-1) ? isNear=true : null;
+    }
+    
+    return isNear
+}
+
+function solution(places) {
+    var answer = [];    
+    for(let i=0; i<places.length; i++){
+        let isFall = 1;
+        for(let k=0; k<25; k++){
+            let x = k % 5
+            let y = Math.floor(k / 5);
+            if(x, y, isDistancing(x, y, places[i], 2)){
+                isFall = 0;
+                break;
+            }
+        }
+        answer.push(isFall)
+    }
+    return answer;
+}
