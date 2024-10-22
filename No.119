@@ -1,0 +1,51 @@
+const commonCheck = (number, array) => {
+    const newArray = [];
+    for(let i=0; i<array.length; i++){
+        number % array[i] === 0 ? newArray.push(array[i]) : null;
+    }
+    return newArray;
+}
+
+const uncommonCheck = (number, array) => {
+    const newArray = [];
+    for(let i=0; i<array.length; i++){
+        number % array[i] !== 0 ? newArray.push(array[i]) : null;
+    }
+    return newArray;
+}
+
+const solutionA = (arrayA, arrayB) => {
+    let minA = 100000000;
+    for(let i=0; i<arrayA.length; i++){
+        minA = Math.min(minA, arrayA[i]);
+    }
+    
+    let common = [];
+    for(let i=2; i*i<= minA; i++){
+        minA % i === 0 ? (common.push(i),common.push(minA / i)) : null;
+    }
+    common.push(minA)
+    
+    for(let i=0; i<arrayA.length; i++){
+        common = commonCheck(arrayA[i], common);
+    }
+
+    for(let i=0; i<arrayB.length; i++){
+        common = uncommonCheck(arrayB[i], common);
+    }
+    
+    return common;
+}
+
+function solution(arrayA, arrayB) {
+    var answer = 0;
+    const A = solutionA(arrayA, arrayB)
+    const B = solutionA(arrayB, arrayA)
+    for(let i=0; i<A.length; i++){
+        answer = Math.max(A[i], answer)
+    }
+    for(let i=0; i<B.length; i++){
+        answer = Math.max(B[i], answer)
+    }
+    return answer
+}
