@@ -1,0 +1,9 @@
+function solution(w, h) {
+    var answer = w * h;
+    let cutted = h;
+    for(let i=1; i<w; i++){
+        ((h * i) / w) % 1 !== 0 ? cutted++ : null;
+    }
+
+    return answer - cutted;
+}
