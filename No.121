@@ -1,0 +1,29 @@
+function solution(weights) {
+    var answer = 0;
+    // 각 무게 별 개수를 저장
+    const WEIGHTS = new Map();
+    for(let i=0; i<=weights.length; i++){
+        for(let x=100; x<=1000; x++){
+            if(weights[i] === x){
+                let temp = WEIGHTS.get(x)
+                temp ? null : temp = 0;
+                WEIGHTS.set(x, temp + 1)
+                break;
+            }
+        }
+    }
+    
+    // 가능한 경우의 수 구하기
+    const multiple = [4/3, 1.5, 2]
+    for(let i=100; i<=1000; i++){
+        if(WEIGHTS.get(i)){
+            answer += (WEIGHTS.get(i) * (WEIGHTS.get(i) - 1)) / 2;
+            for(let x=0; x<3; x++){
+                if(WEIGHTS.get(i * multiple[x])){
+                    answer += WEIGHTS.get(i) * WEIGHTS.get(i * multiple[x]);
+                }
+            }
+        }
+    }
+    return answer;
+}
