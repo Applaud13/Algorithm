@@ -1,0 +1,62 @@
+const goLever = (map, start, time, target) => {
+    if(start.length < 1) return -1;
+    let newMap = map;
+    let newStart = [];
+    
+    for(let i=0; i<start.length; i++){
+        newMap[start[i][0]][start[i][1]] = "X";
+        // 위쪽으로 한칸 이동
+        if(start[i][0] > 0 && newMap[start[i][0] - 1][start[i][1]] !== "X"){
+            if(newMap[start[i][0] - 1][start[i][1]] === target) return (time + 1)
+            newStart.push([start[i][0] - 1, start[i][1]]);
+        }
+        
+        // 오른쪽으로 한칸 이동
+        if(start[i][1] < map[0].length - 1 && newMap[start[i][0]][start[i][1] + 1] !== "X"){
+            if(newMap[start[i][0]][start[i][1] + 1] === target) return (time + 1)
+            newStart.push([start[i][0], start[i][1] + 1]);
+        }
+        
+        // 아래쪽으로 한칸 이동
+        if(start[i][0] < map.length - 1 && newMap[start[i][0] + 1][start[i][1]] !== "X"){
+            if(newMap[start[i][0] + 1][start[i][1]] === target) return (time + 1)
+            newStart.push([start[i][0] + 1, start[i][1]]);
+        }
+        
+        // 왼쪽으로 한칸 이동
+        if(start[i][1] > 0 && newMap[start[i][0]][start[i][1] - 1] !== "X"){
+            if(newMap[start[i][0]][start[i][1] - 1] === target) return (time + 1)
+            newStart.push([start[i][0], start[i][1] - 1]);
+        }
+    }
+
+    let Start = [...new Set(newStart.map(item => JSON.stringify(item)))].map(item => JSON.parse(item));
+    let newTime = goLever(newMap, Start, time + 1, target);
+    return newTime
+}
+
+function solution(maps) {
+    var answer = 0;
+    let map1 = [];
+    let map2 = [];
+    let start1 = [];
+    let start2 = [];
+    for(let i = 0; i < maps.length; i++) {
+        let temp = [];
+        for(let x = 0; x < maps[i].length; x++) {
+            if (maps[i][x] === "S") start1.push([i, x]);
+            if (maps[i][x] === "L") start2.push([i, x]);
+            temp[x] = maps[i][x];
+        }
+        map1.push([...temp]);
+        map2.push([...temp]);
+    }
+
+    answer += goLever(map1, start1, 0, "L")
+    if(answer < 0) return -1;
+    let temp = goLever(map2, start2, 0, "E");
+    if(temp < 1) return -1;
+    answer += temp;
+
+    return answer;
+}
