@@ -1,0 +1,30 @@
+function solution(cards) {
+    var answer = 0;
+    let startBox = 0;
+    let group = [];
+    while(true){
+        let number = 0;
+        // 그룹별 개수 카운팅
+        while(true){
+            if(!cards[startBox]) break
+            let nextStartBox = cards[startBox] - 1;
+            cards[startBox] = null;
+            startBox = nextStartBox;
+            number++;
+        }
+        group.push(number);
+        // 다음 그룹 시작점 선언
+        for(let i=0; i<cards.length; i++){
+            if(cards[i] !== null){
+                startBox = i;
+                break;
+            }
+        }
+        if(!cards[startBox]) break
+    }
+    // 제일 큰 그룹 곱하기
+    if(group.length < 2) return 0;
+    group.sort((a,b) => b - a)
+    answer = group[0] * group[1];
+    return answer;
+}
