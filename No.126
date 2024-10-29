@@ -1,0 +1,54 @@
+function solution(picks, minerals) {
+    var answer = 0;
+    let pickNumber = 0;
+    let newMineral = minerals;
+    // 남는 광물 삭제
+    for(let i=0; i<3; i++){
+        pickNumber += picks[i];
+    }
+    if(minerals.length > pickNumber * 5){
+        newMineral = minerals.slice(0, pickNumber * 5);
+    }else{
+        newMineral = minerals
+    }
+    
+    // 5묶음 별 광물 개수 카운팅
+    let mineralCount = [];
+    let number = [0, 0, 0];
+    for(let i=0; i<newMineral.length; i++){
+        if(newMineral[i] === "diamond"){
+            number[0]++;
+        }else if(newMineral[i] === "iron"){
+            number[1]++;
+        }else if(newMineral[i] === "stone"){
+            number[2]++;
+        }
+        if(i % 5 === 4){
+            mineralCount.push(number);
+            number = [0, 0, 0];
+        } 
+    }
+    if(newMineral.length % 5 !== 0) mineralCount.push(number)
+    
+    // 고급 광물 많은 순으로 정렬
+    mineralCount.sort((a, b) => {
+        if (b[0] > a[0]) return 1;
+        if (b[0] === a[0] && b[1] > a[1]) return 1;
+        return -1;
+    });
+
+    // 최종 점수 계산
+    for(let i=0; i<mineralCount.length; i++){
+        if(picks[0]){
+            picks[0]--;
+            answer += mineralCount[i][0] + mineralCount[i][1] + mineralCount[i][2];
+        }else if(picks[1]){
+            picks[1]--;
+            answer += mineralCount[i][0] * 5 + mineralCount[i][1] + mineralCount[i][2];
+        }else{
+            answer += mineralCount[i][0] * 25 + mineralCount[i][1] * 5 + mineralCount[i][2];
+        }
+    }
+    
+    return answer;
+}
