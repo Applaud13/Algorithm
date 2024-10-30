@@ -1,0 +1,70 @@
+const move = (start, boardArray, time) => {
+    if(start.length < 1) return -1;
+    const newStart = [];
+    const newBoardArray = boardArray;
+    for(let i=0; i<start.length; i++){
+        // 위로 이동
+        let up = [...start[i]];
+        while(up[0] > 0 && newBoardArray[up[0] - 1][up[1]] !== "D"){
+            up[0]--;
+        }
+        if(newBoardArray[up[0]][up[1]] === "G") return time
+        if(newBoardArray[up[0]][up[1]] !== "X"){
+            newStart.push(up);
+            newBoardArray[up[0]][up[1]] = "X";
+        }        
+        // 아래로 이동
+        let down = [...start[i]];
+        while(down[0] < newBoardArray.length - 1 && newBoardArray[down[0] + 1][down[1]] !== "D"){
+            down[0]++;
+        }
+        if(newBoardArray[down[0]][down[1]] === "G") return time
+        if(newBoardArray[down[0]][down[1]] !== "X"){
+            newStart.push(down);
+            newBoardArray[down[0]][down[1]] = "X";
+        }
+        // 오른쪽으로 이동
+        let right = [...start[i]];
+        while(right[1] < newBoardArray[0].length - 1 && newBoardArray[right[0]][right[1] + 1] !== "D"){
+            right[1]++;
+        }
+        if(newBoardArray[right[0]][right[1]] === "G") return time
+        if(newBoardArray[right[0]][right[1]] !== "X"){
+            newStart.push(right);
+            newBoardArray[right[0]][right[1]] = "X";
+        }
+        
+        // 왼쪽으로 이동
+        let left = [...start[i]];
+        while(left[1] > 0 && newBoardArray[left[0]][left[1] - 1] !== "D"){
+            left[1]--;
+        }
+        if(newBoardArray[left[0]][left[1]] === "G") return time
+        if(newBoardArray[left[0]][left[1]] !== "X"){
+            newStart.push(left);
+            newBoardArray[left[0]][left[1]] = "X";
+        }
+    }
+    return move(newStart, newBoardArray, ++time)
+}
+
+function solution(board) {
+    var answer = 0;
+    const start = [];
+    const boardArray = [];
+    for(let i=0; i<board.length; i++){
+        let temp = [];
+        for(let x=0; x<board[0].length; x++){  
+            if(board[i][x] === "R"){
+                start.push([i, x]);
+                temp.push("X")
+            }else{
+                temp.push(board[i][x]);
+            }
+        }
+        boardArray.push(temp);
+    }
+    
+    answer = move(start, boardArray, 1);
+    return answer;
+}
