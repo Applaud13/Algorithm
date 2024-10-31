@@ -1,0 +1,50 @@
+const kArrange = (n, array) => {
+    let target = 0;
+    let newArray = array;
+    while(target < array.length - 1){
+        if(newArray[target + 1] < n){
+            newArray[target] = newArray[target + 1];
+            target++;
+        }else{break}
+    }
+    newArray[target] = n;
+    return newArray;
+}
+
+function solution(n, k, enemy) {
+    if(k >= enemy.length) return enemy.length
+    let x = 1;
+    var answer = Math.floor(enemy.length / x);
+    let temp = enemy.slice(0, answer);
+    temp.sort((a,b) => a - b);
+    let ks = temp.slice(-k);
+    let kSum = 0;
+    let enemySum = 0;
+    for(let i=0; i<answer-k; i++){
+        enemySum += temp[i];
+    }
+    while(enemySum > n){
+        x += 0.3;
+        answer = Math.floor(enemy.length / x);
+        temp = enemy.slice(0, answer);
+        temp.sort((a,b) => a - b);
+        ks = temp.slice(-k);
+        kSum = 0;
+        enemySum = 0;
+        for(let i=0; i<answer-k; i++){
+            enemySum += temp[i];
+        }
+    }
+    
+    while(enemy.length - answer){
+        enemySum += enemy[answer];
+        if(ks[0] < enemy[answer]){
+            kSum = kSum + enemy[answer] - ks[0];
+            ks = kArrange(enemy[answer], ks)
+        }
+        if(enemySum - kSum > n) break;
+        answer++;
+    }
+    if(answer < k) return k
+    return answer;
+}
