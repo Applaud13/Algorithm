@@ -1,0 +1,33 @@
+function solution(k, ranges) {
+    var answer = [];
+    // 꼭짓점 값 계산
+    const top = [k];
+    while(k !== 1){
+        if(k % 2){
+            k = k * 3 + 1
+            top.push(k);
+        }else{
+            k /= 2;
+            top.push(k);
+        }
+    }
+    
+    // 부분 넓이 계산
+    const area = [];
+    for(let i=0; i<top.length - 1; i++){
+        area.push((top[i] + top[i+1]) / 2);
+    }
+    
+    // 범위별 넓이 return
+    for(let i=0; i<ranges.length; i++){
+        if(ranges[i][0] > area.length + ranges[i][1]) answer.push(-1);
+        else{
+            let temp = 0;
+            for(let x=ranges[i][0]; x<area.length + ranges[i][1]; x++){
+                temp += area[x];
+            }
+            answer.push(temp);
+        }
+    }
+    return answer;
+}
