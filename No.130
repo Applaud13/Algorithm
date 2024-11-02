@@ -1,0 +1,26 @@
+const numberIncludeBoundary= (r) => {
+    // y축 0일때 개수
+    let number = 2 * r + 1;
+    // y축 1~r일때 개수
+    for(let i=1; i<=r; i++){
+        let temp = r * r - i * i
+        number += Math.floor(Math.sqrt(temp)) * 4 + 2
+    }
+    return number
+}
+
+const numberUnincludeBoundary= (r) => {
+    // y축 0일때 개수
+    let number = 2 * r - 1;
+    // y축 1~r일때 개수
+    for(let i=1; i<r; i++){
+        let temp = r * r - i * i
+        number += (Math.ceil(Math.sqrt(temp)) - 1) * 4 + 2
+    }
+    return number
+}
+
+function solution(r1, r2) {
+    var answer = numberIncludeBoundary(r2) - numberUnincludeBoundary(r1);   
+    return answer;
+}
