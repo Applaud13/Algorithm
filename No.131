@@ -1,0 +1,42 @@
+const addQueen = (x, row, map, N) => {
+    if(map.length - 1 === row) return N+1
+    
+    // map 깊은 복사
+    let newMap = map.map(newRow => [...newRow]);
+    let newN = N;
+    
+    // 불가능 지점 표시
+    for(let i=0; i<map.length; i++){
+        newMap[row][i] = "X"
+    }
+    for(let i=row; i<map.length; i++){
+        newMap[i][x] = "X"
+        if(x+i-row < map.length) newMap[i][x+i-row] = "X"
+        if(x-i+row >= 0) newMap[i][x-i+row] = "X"
+    }
+
+    // 다음 줄에 대해 반복
+    for(let i=0; i<map.length; i++){
+        if(newMap[row+1][i] === "O"){
+            newN += addQueen(i, row+1, newMap, N);  
+        }
+    }
+    return newN
+}
+
+function solution(n) {
+    var answer = 0;
+    let map = [];
+    for(let i=0; i<n; i++){
+        let temp = [];
+        for(let x=0; x<n; x++){
+            temp.push("O");
+        }
+        map.push(temp)
+    }
+    for(let i=0; i<n; i++){
+        answer += addQueen(i, 0, map, 0);
+    }
+
+    return answer;
+}
