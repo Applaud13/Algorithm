@@ -1,0 +1,49 @@
+function solution(name) {
+    var answer = 0;
+    for(let i=0; i<name.length; i++){
+        let n = name[i].charCodeAt(0) - 65
+        if(n > 13){
+            n = 26 - n;
+        }
+        answer += n;
+    }
+
+    let moves = []
+    // 왼쪽으로 i칸 이동후 오른쪽으로 이동
+    for(let i=0; i<name.length; i++){
+        let A = true
+        let next = name.length - 1 - i;
+        let move = i + name.length - 1
+        while(A){
+            if(name[next] === "A"){
+                move--;
+                next--;
+                if(next === 0) A = false;
+            }else{
+                A = false;
+            }
+        }
+        moves.push(move)
+    }
+    
+    // 오른쪽으로 i칸 이동후 왼쪽으로 이동
+    for(let i=0; i<name.length; i++){
+        let A = true
+        let next = 1 + i;
+        let move = i + name.length - 1
+        while(A){
+            if(name[next] === "A"){
+                move--;
+                next++;
+                if(next === name.length) A = false;
+            }else{
+                A = false;
+            }
+        }
+        moves.push(move)
+    }
+    
+    answer += Math.max(0, Math.min(...moves))
+    
+    return answer;
+}
