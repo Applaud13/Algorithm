@@ -1,0 +1,43 @@
+function solution(board) {
+    // 1. X가 O보다 많거나 O가 X보다 2개이상 많은 경우
+    let Onumber = 0;
+    let Xnumber = 0;
+    for(let i=0; i<3; i++){
+        for(let x=0; x<3; x++){
+            if(board[i][x] === "O") Onumber++;
+            if(board[i][x] === "X") Xnumber++;
+        }
+    }
+    if(Onumber < Xnumber || Onumber > Xnumber + 1) return 0
+    
+    // 2. OX 모두 빙고가된 경우, 빙고가 없는 경우
+    let O = false;
+    let X = false;
+    // 가로 빙고
+    for(let i=0; i<3; i++){
+        if(board[i]=== "OOO") O = true;
+        if(board[i]=== "XXX") X = true;
+    }
+    // 세로 빙고
+    for(let i=0; i<3; i++){
+        if(board[0][i] === "O" && board[1][i] === "O" && board[2][i] === "O") O = true;
+        if(board[0][i] === "X" && board[1][i] === "X" && board[2][i] === "X") X = true;
+    }
+    // 대각선 빙고
+    if(board[0][0] === "O" && board[1][1] === "O" && board[2][2] === "O") O = true;
+    if(board[2][0] === "O" && board[1][1] === "O" && board[0][2] === "O") O = true;
+    if(board[0][0] === "X" && board[1][1] === "X" && board[2][2] === "X") X = true;
+    if(board[2][0] === "X" && board[1][1] === "X" && board[0][2] === "X") X = true;
+    // 결과값
+    if(O && X) return 0
+    if(!O && !X) return 1
+
+    // 3. 하나만 빙고인 경우 (OX 개수 검증)
+    if(O){
+        if(Onumber - Xnumber !== 1) return 0
+    }else{
+        if(Onumber - Xnumber !== 0) return 0
+    }
+    
+    return 1;
+}
