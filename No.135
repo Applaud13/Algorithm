@@ -1,0 +1,39 @@
+const a = (users, emoticons, k, result) => {
+    k--;
+    let newResult = result;
+    for(let i=1; i<5; i++){
+        let newEmoticons = [...emoticons];
+        // 가격 -> [할인율, 가격] 으로 변환 (가능한 모든 할인율 대입)
+        newEmoticons[newEmoticons.length - k - 1] = [i * 10, newEmoticons[newEmoticons.length - k - 1]]
+        if(k){
+            newResult = a(users, newEmoticons, k, newResult)
+        // 모두 변환했으면 해당 비율에서의 결과값 계산 [가입자 수, 판매액]
+        }else{
+            let resultNow = [0, 0]
+            for(let i=0; i<users.length; i++){
+                let price = 0;
+                for(let x=0; x<newEmoticons.length; x++){
+                    if(users[i][0] <= newEmoticons[x][0]){
+                        price += (1 - newEmoticons[x][0] / 100) * newEmoticons[x][1]
+                    }
+                }
+                if(price >= users[i][1]){
+                    resultNow[0]++;
+                }else{
+                    resultNow[1] += price;
+                }
+            }
+            // 기존보다 더 많은 사용자 수 or 같은 사용자수 + 비싼 판매액 일 경우 결과값 바꾸기
+            if(newResult[0] < resultNow[0]){
+                newResult = resultNow;
+            }else if(newResult[0] === resultNow[0] && newResult[1] < resultNow[1]){
+                newResult = resultNow;
+            }  
+        }
+    }
+    return newResult
+}
+
+function solution(users, emoticons) {
+    return a(users, emoticons, emoticons.length, [0, 0]);;
+}
