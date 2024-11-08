@@ -1,0 +1,29 @@
+function solution(targets) {
+    var answer = 0;
+    targets.sort((a, b) => a[1] - b[1])
+    // targets를 종료지점이 빠른 순서대로 정렬 후 index 삽입
+    for(let i=0; i<targets.length; i++){
+        targets[i].push(i);
+    }
+    // index삽입된 targets를 시작지점이 빠른 순서대로 정렬 -> newTargets
+    let newTargets = [...targets]
+    newTargets.sort((a, b) => a[0] - b[0])
+    
+    let attackMissile = 0
+    // 종료지점이 빠른 곳 = 요격 미사일(defenseMissile)
+    for(let i=0; i<targets.length; i++){
+        let defenseMissile = targets[i][1]
+        if(defenseMissile !== -1){
+            // 시작지점이 종료지점보다 빠른 미사일 요격(index 기반으로 targets값 -1로 변경)
+            while(attackMissile !== targets.length){
+                if(defenseMissile > newTargets[attackMissile][0]){
+                    targets[newTargets[attackMissile][2]] = [-1, -1]
+                    attackMissile++;
+                }else { break }
+            }
+            answer++
+        }        
+    }
+
+    return answer;
+}
