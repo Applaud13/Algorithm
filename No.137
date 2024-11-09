@@ -1,0 +1,110 @@
+const allScore = (shootScores, leftShoot, nowScore, highScore, answer) => {
+    let shoot = false;
+    let newHighScore = highScore;
+    for(let i=0; i<shootScores.length; i++){
+        if (leftShoot >= shootScores[i][0]){
+            let newShootScores = JSON.parse(JSON.stringify(shootScores));
+            let newLeftShoot = leftShoot - newShootScores[i][0]
+            let newNowScore = nowScore + newShootScores[i][1]
+            if(newShootScores[i].length <= 2){
+                newShootScores.splice(i, 1)
+            }else{
+                newShootScores[i].splice(1, 1);
+            }
+            if(newNowScore > newHighScore) answer = [newShootScores], newHighScore = newNowScore
+            if(newNowScore === newHighScore) answer.push(newShootScores)
+            let temp = allScore(newShootScores, newLeftShoot, newNowScore, newHighScore, answer)
+            newHighScore = temp[0]
+            answer = temp[1]
+        }
+    }
+    return [newHighScore, answer]
+}
+
+
+function solution(n, info) {
+    var answer = [];
+    const shootScores = []
+    // [쏴야하는 화살 수, 얻을 수 있는 점수들...] 배열로 표현
+    for(let i=0; i<11; i++){
+        let pushed = false;
+        let stealScore = 1;
+        if(info[i])  stealScore++;
+        for(let x=0; x<shootScores.length; x++){
+            if(shootScores[x][0] === info[i] + 1) shootScores[x].push((10 - i) * stealScore), pushed = true
+        }
+        if(!pushed) shootScores.push([info[i] + 1, (10 - i) * stealScore])
+    }
+    
+    // restul: [최대점수, 최대 점수가 나오는 모든 경우의 수]
+    let result = allScore(shootScores, n, 0, 0, answer)
+    let enemyScore = 0;
+    for(let i=0; i<11; i++){
+        if(info[i]) enemyScore += 10 - i
+    }
+    if(enemyScore >= result[0]) return [-1]
+    answer = result[1]
+    
+    // [쏴야하는 화살 수, 얻을 수 있는 점수들...] 배열을 다시 원래 모습으로 복구
+    let everyHighScore = [];
+    for(let i=0; i<answer.length; i++){
+        let newShootScores = JSON.parse(JSON.stringify(shootScores));
+        let temp = [0,0,0,0,0,0,0,0,0,0,0]
+        for(let x=0; x<shootScores.length; x++){
+            let same = false;
+            for(let y=0; y<answer[i].length; y++){
+                if(shootScores[x][0] === answer[i][y][0]) same = true
+            }
+            if(!same){
+                let a = newShootScores.splice(x, 1)
+                let steal = a[0][0] === 1 ? 1 : 2;
+                for(let z=1; z<a[0].length; z++){
+                    temp[10 - a[0][z] / steal] = a[0][0];
+                }
+            }
+        }
+    
+        for(let x=0; x<newShootScores.length; x++){
+            for(let y=1; y<newShootScores[x].length; y++){
+                let same = false;
+                for(let z=1; z<answer[i][x].length; z++){
+                    if(newShootScores[x][y] === answer[i][x][z]){
+                        same = true;
+                        break
+                    }
+                }
+                if(!same){
+                    let steal = newShootScores[x][0] === 1 ? 1 : 2;
+                    temp[10 - newShootScores[x][y] / steal] = newShootScores[x][0];
+                }
+            }
+        }
+        everyHighScore.push(temp)
+    }
+    
+    // 아직 안쏜 화살: 0점 과녁에 가산
+    for(let i=0; i<everyHighScore.length; i++){
+        let number = 0;
+        for(let x=0; x<11; x++){
+            number += everyHighScore[i][x];
+        }
+        everyHighScore[i][10] += n - number
+    }
+    
+    // 모든 경우의 수 중 가장 낮은 점수가 많은 것 = answer
+    answer = everyHighScore[0]
+    for(let i=1; i<everyHighScore; i++){
+        for(let x=0; x<everyHighScore[i].length; x++){
+            for(let y=0; y<11; y++){
+                if(answer[10 - y] > everyHighScore[i][10 - y]){
+                    break;
+                }else if(answer[10 - y] < everyHighScore[i][10 - y]){
+                    answer = everyHighScore[i]
+                    break;
+                }
+            }
+        }
+    }
+    
+    return answer
+}
