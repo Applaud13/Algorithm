@@ -1,0 +1,63 @@
+function solution(line) {
+    var answer = [];
+    const answerPosition = [];
+    // 교점 좌표들을 answerPosition에 담기
+    for(let a=0; a<line.length - 1; a++){
+        for(let b=a+1; b<line.length; b++){
+            let x;
+            let y = (line[a][2] * line[b][0] - line[a][0] * line[b][2]) / 
+                    (line[a][0] * line[b][1] - line[a][1] * line[b][0])
+            if(line[a][0]){
+                x = (line[a][1] * y + line[a][2]) / (-1 * line[a][0])
+            }else{
+                x = (line[b][1] * y + line[b][2]) / (-1 * line[b][0])
+            }
+            
+            if(x % 1 === 0 && y % 1 === 0){
+                answerPosition.push([x, y])
+            } 
+        }        
+    }
+    
+    
+    let lowX = answerPosition[0][0];
+    let highX = answerPosition[0][0];
+    let lowY = answerPosition[0][1];
+    let highY = answerPosition[0][1];
+    for(let i=1; i<answerPosition.length; i++){
+        lowX = Math.min(lowX, answerPosition[i][0])
+        highX = Math.max(highX, answerPosition[i][0])
+        lowY = Math.min(lowY, answerPosition[i][1])
+        highY = Math.max(highY, answerPosition[i][1])
+    }
+    
+    // 가로, 세로 길이를 구하여 기본 answer 만들기
+    let lengthX = highX - lowX + 1
+    let lengthY = highY - lowY + 1
+    for(let i=0; i<lengthY; i++){
+        const width = [];
+        for(let x=0; x<lengthX; x++){
+            width.push(".");
+        }
+        answer.push(width);
+    }
+    
+    // 배열 형태에 맞게 answerPosition을 변경하여 교점의 answer값 *로 바꾸기
+    for(let i=0; i<answerPosition.length; i++){
+        let temp = answerPosition[i][0];
+        answerPosition[i][0] = highY - answerPosition[i][1];
+        answerPosition[i][1] = temp - lowX;
+        answer[answerPosition[i][0]][answerPosition[i][1]] = "*"
+    }
+    
+    // 배열 형태의 answer값 문자열형태로 바꾸기
+    for(let i=0; i<lengthY; i++){
+        let width = ""
+        for(let x=0; x<lengthX; x++){
+            width += answer[i][x]
+        }
+        answer[i] = width
+    }
+
+    return answer;
+}
