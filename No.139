@@ -1,0 +1,58 @@
+function solution(cap, n, deliveries, pickups) {
+    var answer = 0;
+    let deliveriesLeft = 0;
+    let pickupsLeft = 0;
+    for(let i=0; i<n; i++){
+        deliveriesLeft += deliveries[i];
+    }
+    for(let i=0; i<n; i++){
+        pickupsLeft += pickups[i];
+    }
+    
+    let returnPointGo = n;
+    let returnPointBack = n;
+    while(deliveriesLeft || pickupsLeft > 0){
+        let deliveryBoxCount = Math.min(cap, deliveriesLeft)
+        deliveriesLeft -= deliveryBoxCount
+        pickupsLeft -= cap;
+        
+        // 들고나온 박스들 배달하면서 끝까지 가기
+        let lastPoint = true;
+        let newReturnPointGo = 0;
+        for(let i=0; i<returnPointGo; i++){
+            if(deliveries[returnPointGo - 1 - i]){
+                if(lastPoint){
+                    newReturnPointGo = returnPointGo - i
+                    lastPoint = false;
+                }   
+                const dropBoxCount = Math.min(deliveryBoxCount, deliveries[returnPointGo - 1 - i])
+                deliveryBoxCount -= dropBoxCount;
+                deliveries[returnPointGo - 1 - i] -= dropBoxCount;
+            }
+            if(!deliveryBoxCount) break;
+        }
+        returnPointGo = newReturnPointGo
+        
+        // 끝에서 박스를 수거하면서 돌아오기   
+        let returnBoxCount = 0;
+        let newReturnPointBack = 0;
+        lastPoint = true;
+        for(let i=0; i<returnPointBack; i++){
+            if(pickups[returnPointBack - 1 - i]){
+                if(lastPoint){
+                    newReturnPointBack = returnPointBack - i
+                    lastPoint = false;
+                }
+                const getBoxCount = Math.min(cap - returnBoxCount, pickups[returnPointBack - 1 - i])
+                returnBoxCount += getBoxCount;
+                pickups[returnPointBack - 1 - i] -= getBoxCount;
+            }
+            if(returnBoxCount === cap) break;
+        }
+        returnPointBack = newReturnPointBack;
+        
+        answer += Math.max(returnPointGo, returnPointBack) * 2
+    }
+    
+    return answer;
+}
