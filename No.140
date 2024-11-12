@@ -1,0 +1,22 @@
+function solution(n, l, r) {
+    var answer = 0;
+
+    for(let i=l-1; i<r; i++){
+        let I = i
+        let notZero = true;
+        for(let k=0; k<n; k++){
+            const x = Math.pow(5, n-k-1);
+            // 0 값이 나오면 그 후 n번동안은 계속 0
+            if(Math.floor(I / x) === 2){
+                i += x - 1 - I % x
+                notZero = false;
+                break;
+            }
+            I -= Math.floor(I / x) * x
+        }
+        // 0 값이 한번도 안나오면 1
+        if(notZero) answer++
+    }
+    
+    return answer;
+}
