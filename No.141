@@ -1,0 +1,35 @@
+const upWalls = (m, n, hitPosition, targetPosition) => {
+    if(hitPosition[0] === targetPosition[0] && hitPosition[1] < targetPosition[1]) return Infinity
+    return (2 * n - targetPosition[1] - hitPosition[1]) ** 2 + (targetPosition[0] - hitPosition[0]) ** 2;
+}
+
+const downWalls = (m, n, hitPosition, targetPosition) => {
+    if(hitPosition[0] === targetPosition[0] && hitPosition[1] > targetPosition[1]) return Infinity
+    return (targetPosition[1] + hitPosition[1]) ** 2 + (targetPosition[0] - hitPosition[0]) ** 2;
+}
+
+const rigthWalls = (m, n, hitPosition, targetPosition) => {
+    if(hitPosition[1] === targetPosition[1] && hitPosition[0] < targetPosition[0]) return Infinity
+    return (2 * m - targetPosition[0] - hitPosition[0]) ** 2 + (targetPosition[1] - hitPosition[1]) ** 2;
+}
+
+const leftWalls = (m, n, hitPosition, targetPosition) => {
+    if(hitPosition[1] === targetPosition[1] && hitPosition[0] > targetPosition[0]) return Infinity
+    return (targetPosition[0] + hitPosition[0]) ** 2 + (targetPosition[1] - hitPosition[1]) ** 2;
+}
+
+const minDistance = (m, n, hitPosition, targetPosition) => {
+    const upDistance = upWalls(m, n, hitPosition, targetPosition)
+    const downDistance = downWalls(m, n, hitPosition, targetPosition)
+    const rightDistance = rigthWalls(m, n, hitPosition, targetPosition)
+    const leftDistance = leftWalls(m, n, hitPosition, targetPosition)
+    return Math.min(upDistance, downDistance, rightDistance, leftDistance)
+}
+
+function solution(m, n, startX, startY, balls) {
+    var answer = [];
+    for(let i=0; i<balls.length; i++){
+        answer.push(minDistance(m, n, [startX, startY], balls[i]))
+    }
+    return answer;
+}
